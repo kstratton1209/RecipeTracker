@@ -63,10 +63,11 @@
             <p>My recipes:</p>
     
     
-            <table class="table">
+            <table class="table table-striped table-bordered table-sm">
                 <thead>
                   <tr>
                     <th scope="col">Recipe</th>
+                    <th scope="col">Category</th>
                     <th scope="col">Source</th>
                     <th scope="col">Date added</th>
                     <th scope="col">Status</th>
@@ -78,7 +79,8 @@
                     
 
                         <tr>
-                            <th scope="row">{{recipes.title}}</th>
+                            <td>{{recipes.title}}</td>
+                            <td>{{recipes.category}}</td>
                             <td>{{recipes.source}}</td>
                             <td>{{recipes.created_at}}</td>
                             {% if logged_user in recipes.already_made.all %}
@@ -100,8 +102,9 @@
                 {% for recipes in recipes_made %}
                 {% if recipes not in logged_user_recipes %}
                   <tr>
-                      <th scope="row">{{recipes.title}}</th>
-                      <td>{{recipes.source}}</td>
+                    <td>{{recipes.title}}</td>
+                    <td>{{recipes.category}}</td>
+                    <td>{{recipes.source}}</td>
                       <td>{{recipes.created_at}}</td>
                       {% if logged_user in recipes.already_made.all %}
                         <td>Made it!</td>
@@ -122,8 +125,9 @@
                 {% if recipes not in recipes_made %}
 
                   <tr>
-                      <th scope="row">{{recipes.title}}</th>
-                      <td>{{recipes.source}}</td>
+                    <td>{{recipes.title}}</td>
+                    <td>{{recipes.category}}</td>
+                    <td>{{recipes.source}}</td>
                       <td>{{recipes.created_at}}</td>
                       {% if logged_user in recipes.already_made.all %}
                         <td>Made it!</td>
@@ -147,6 +151,8 @@
 
       </div>
 
+
+      
       <script src="{% static '//vendor/jquery/jquery.min.js' %}"></script>
 
 
