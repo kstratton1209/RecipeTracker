@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/simple-sidebar.css' %}"> 
+<title>Add recipe</title>
+
+</head>
+
+<body>
+
+  <div class="d-flex" id="wrapper">
+
+    <!-- Sidebar -->
+
+    <!-- /#sidebar-wrapper -->
+
+    <!-- Page Content -->
+    <div id="page-content-wrapper">
+
+      <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+        <a href="/content/home" class="btn btn-primary" >Back</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+            <li class="nav-item active">
+              <a class="nav-link" href="/content/home">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/content/{{request.session.id}}/myRecipes">My Recipes</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Options
+              </a>
+              <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="/content/addRecipe">Add New Recipe</a>
+                <a class="dropdown-item" href="#">Edit Profile</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="/logout">Logout</a>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </nav>
+
+      <div class="container-fluid">
+
+        <div class="granted">
+            <h4>Hello {{request.session.first_name}}! Add a new recipe here:</h4>
+
+
+            {% if messages %}
+                <ul class="messages" style = "color:red">    
+                    {% for message in messages %}    
+                        <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>    
+                    {% endfor %}
+                </ul>
+            {% endif %} 
+            <form action="/content/createRecipe" method='post'>
+                {% csrf_token %}
+                <input type="hidden" name="user_id" value="{{request.session.id}}">
+                Recipe title: <input type='text' name='recipe_title' value = '{{recipeName}}'>
+                <p></p>
+                Source: <input type='text' name='source' value = '{{recipeSource}}'>
+                <p></p>            
+                <div class="dropdown" style="display:flex">
+                    <p style = "padding-right: 50px">Category</p>
+                    <select id="Category" name="category">
+                        
+                        <option value="Appetizer">Appetizer</option>
+                        <option value="Side">Side</option>
+                        <option value="Main">Main</option>
+                        <option value="Dessert">Desset</option>
+                        
+                    </select>
+                </div>
+                <p></p>
+                URL: <input type='text' name='url'>
+                <p></p>
+                Image (optional- use "copy image address"): <input type='text' name='img'>
+                <p></p>
+                <div class="dropdown" style="display:flex">
+                    <p style = "padding-right: 20px">Have you made this recipe?</p>
+                    <select id="status" name="status">
+                        <option name= "want_to_make">Made it!</option>
+                        <option name= "already_made">Want to try it!</option>
+                    </select>
+                </div>
+                <a href="/content/home" class="btn btn-primary" style= "margin-top: 20px">Cancel</a>
+                <input type="submit" value = "Submit" class="btn btn-primary" style= "margin-top: 20px"> 
+            </form>
+            
+        </div>
+    </body>
+</html>

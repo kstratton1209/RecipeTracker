@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/simple-sidebar.css' %}"> 
+<title>Home</title>
+
+</head>
+
+<body>
+
+  <div class="d-flex" id="wrapper">
+
+    <!-- Sidebar -->
+    <div class="bg-light border-right" id="sidebar-wrapper">
+      <div class="sidebar-heading">Recipe tracker </div>
+      <div class="list-group list-group-flush">
+        <a href="" class="list-group-item list-group-item-action bg-light">Home</a>
+        <a href="/content/category/Appetizer" class="list-group-item list-group-item-action bg-light" id = 'appSearch'>Appetizers ({{recipes_appetizers.count}})</a>
+        <a href="/content/category/Side" class="list-group-item list-group-item-action bg-light" id = 'sideSearch'>Sides ({{recipes_sides.count}})</a>
+        <a href="/content/category/Main" class="list-group-item list-group-item-action bg-light" id = 'mainSearch'>Mains ({{recipes_mains.count}})</a>
+        <a href="/content/category/Dessert" class="list-group-item list-group-item-action bg-light" id = 'dessertSearch'>Desserts ({{recipes_desserts.count}})</a>
+      </div>
+    </div>
+    <!-- /#sidebar-wrapper -->
+
+    <!-- Page Content -->
+    <div id="page-content-wrapper">
+
+      <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+        <button class="btn btn-primary" id="menu-toggle">Close Menu</button>
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+            <li class="nav-item active">
+              <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/content/{{request.session.id}}/myRecipes">My Recipes</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Options
+              </a>
+              <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="/content/addRecipe">Add New Recipe</a>
+                <a class="dropdown-item" href="/content/searchRecipe">Search Recipes</a>
+                <a class="dropdown-item" href="#">Edit Profile</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="/logout">Logout</a>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </nav>
+      <img src="https://shapeyourfutureok.com/wp-content/uploads/2018/10/25698-TSET-19-04-SYF-Website-Refresh_Header_5FoodGroups_F.jpg" alt="" style="width:90%; margin-left: 10px;">
+
+      <div class="container-fluid">
+        <h1 class="mt-4">My recipe tracker</h1>
+        <p>Welome to My Recipe Tracker! An easy way to track and share recipes you've tried or want to make.</p>
+        <p></p>
+        <h2>Trending recipes...</h2>
+        
+        <h3>Appetizers</h3>
+        {% for appetizers in recipes_appetizers %}
+            <h6></h6><a href="/content/recipe/{{appetizers.id}}/details">{{appetizers.title}}</a></h6>
+            <h6>Added by {{appetizers.user.first_name}}</h6>
+            <img src="{{appetizers.img}}" alt="" style="width:20%">
+
+            {% if logged_user != appetizers.user and logged_user not in appetizers.want_to_make.all and logged_user not in appetizers.already_made.all %}
+            <form action="/content/{{appetizers.id}}/{{request.session.id}}/like" method='post'>
+              {% csrf_token %}
+            <div class="dropdown" style="display:flex">
+              <p style = "padding-right: 20px">Have you made this recipe?</p>
+              <select id="status" name="status">
+                  <option name= "want_to_make">Made it!</option>
+                  <option name= "already_made">Want to try it!</option>
+              </select>
+              <input type="submit" value = "Submit" class="btn btn-primary btn-sm" style= "margin:5px 0px 0px 0px 20px; margin-left: 10px;">
+              </form>  
+            </div>             
+            {% endif %}
+        {% endfor %}
+
+
+        <h3>Sides</h3>
+        {% for sides in recipes_sides %}
+            <h6></h6><a href="/content/recipe/{{sides.id}}/details">{{sides.title}}</a></h6>
+            <h6>Added by {{sides.user.first_name}}</h6>
+            <img src="{{sides.img}}" alt="" style="width:20%">
+
+            {% if logged_user != sides.user and logged_user not in sides.want_to_make.all and logged_user not in sides.already_made.all %}
+            <form action="/content/{{sides.id}}/{{request.session.id}}/like" method='post'>
+              {% csrf_token %}
+            <div class="dropdown" style="display:flex">
+              <p style = "padding-right: 20px">Have you made this recipe?</p>
+              <select id="status" name="status">
+                  <option name= "want_to_make">Made it!</option>
+                  <option name= "already_made">Want to try it!</option>
+              </select>
+              <input type="submit" value = "Submit" class="btn btn-primary btn-sm" style= "margin:5px 0px 0px 0px 20px; margin-left: 10px;">
+              </form>  
+            </div>             
+            {% endif %}
+        {% endfor %}
+
+
+
+        <h3>Mains</h3>
+        {% for mains in recipes_mains %}
+            <h6></h6><a href="/content/recipe/{{mains.id}}/details">{{mains.title}}</a></h6>
+            <h6>Added by {{mains.user.first_name}}</h6>
+            <img src="{{mains.img}}" alt="" style="width:20%">
+
+            <!-- display option to select if you've made a recipe or want to try it (only displays if recipe belongs to another user-->
+            {% if logged_user != mains.user and logged_user not in mains.want_to_make.all and logged_user not in mains.already_made.all %}
+            <form action="/content/{{mains.id}}/{{request.session.id}}/like" method='post'>
+              {% csrf_token %}
+            <div class="dropdown" style="display:flex">
+              <p style = "padding-right: 20px">Have you made this recipe?</p>
+              <select id="status" name="status">
+                  <option name= "want_to_make">Made it!</option>
+                  <option name= "already_made">Want to try it!</option>
+              </select>
+              <input type="submit" value = "Submit" class="btn btn-primary btn-sm" style= "margin:5px 0px 0px 0px 20px; margin-left: 10px;">
+            </div>  
+            </form>               
+            {% endif %}
+        {% endfor %}
+
+
+
+        <h3>Desserts</h3>
+        {% for desserts in recipes_desserts %}
+            <h6></h6><a href="/content/recipe/{{desserts.id}}/details">{{desserts.title}}</a></h6>
+            <h6>Added by {{desserts.user.first_name}}</h6>
+            <img src="{{desserts.img}}" alt="" style="width:20%">
+
+            {% if logged_user != desserts.user and logged_user not in desserts.want_to_make.all and logged_user not in desserts.already_made.all %}
+            <form action="/content/{{desserts.id}}/{{request.session.id}}/like" method='post'>
+              {% csrf_token %}
+            <div class="dropdown" style="display:flex">
+              <p style = "padding-right: 20px">Have you made this recipe?</p>
+              <select id="status" name="status">
+                  <option name= "want_to_make">Made it!</option>
+                  <option name= "already_made">Want to try it!</option>
+              </select>
+              <input type="submit" value = "Submit" class="btn btn-primary btn-sm" style= "margin:5px 0px 0px 0px 20px; margin-left: 10px;">
+            </div>  
+            </form>               
+            {% endif %}
+        {% endfor %}
+   
+    <!-- /#page-content-wrapper -->
+
+  </div>
+  <!-- /#wrapper -->
+</div>
+  <!-- Bootstrap core JavaScript -->
+ 
+
+
+  <script src="{% static '//vendor/jquery/jquery.min.js' %}"></script>
+  <script src="{% static '//vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+  <!-- Menu Toggle Script -->
+  <script>
+    $("#menu-toggle").click(function(e) {
+      e.preventDefault();
+      $("#wrapper").toggleClass("toggled");
+    });
+    
+  </script>
+
+
+
+</body>
+
+</html>
