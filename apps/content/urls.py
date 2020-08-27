@@ -12,5 +12,16 @@ urlpatterns = [
     path('searchRecipe',views.searchRecipe),
     path('discover',views.discoverRecipe),
     path('category/<category>',views.category),
+    path('<id>/review',views.addReview),
+    path('<id>/createReview',views.createReview),
+    path('<id>/<review_id>/deleteReview',views.deleteReview),
+    path('<user_id>/<id>/delete', views.deleteRecipe),
+    path('<user_id>/<id>/edit', views.editRecipe),
+    path('<user_id>/<id>/update', views.updateRecipe),
+    path('<user_id>/<follow_id>/follow', views.addFollow),
+    path('<user_id>/<follow_id>/unfollow', views.unfollow),
+
+
+
     # path('granted', views.granted)
 ]

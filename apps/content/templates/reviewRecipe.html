@@ -13,25 +13,17 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
 {% load static %}
 <link rel="stylesheet" href="{% static 'css/simple-sidebar.css' %}"> 
-<title>Search new recipe</title>
+<title>Add recipe</title>
 
-<style>
-
-    .card {
-        margin: 20px;
-    }
-
-    .results {
-        display: flex;
-        flex-direction: row;
-        flex-wrap: wrap;
-    }
-        
-</style>
+</head>
 
 <body>
 
   <div class="d-flex" id="wrapper">
+
+    <!-- Sidebar -->
+
+    <!-- /#sidebar-wrapper -->
 
     <!-- Page Content -->
     <div id="page-content-wrapper">
@@ -67,22 +59,48 @@
 
       <div class="container-fluid">
 
-      
-      
-            <div class="results">
-                {% for recipes in recipe_by_category %}
-                <div class="card" style="width: 20rem;">
-                  <img src="{{ MEDIA_URL }}{{ recipes.img }}" alt="img" style="width:100%">
-                  <div class="card-body">
-                    <h5 class="card-title">{{recipes.title}}</h5>
-                    <a href="{{recipes.url}}" class="card-text" >{{recipes.source}}</a>
-                    <p></p>
-                    </div>
+        <div class="row">
+            <div class="col">
+
+            <h4>Hello {{request.session.first_name}}! Add a review for {{recipe.title}}:</h4>
+
+
+            {% if messages %}
+                <ul class="messages" style = "color:red">    
+                    {% for message in messages %}    
+                        <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>    
+                    {% endfor %}
+                </ul>
+            {% endif %} 
+            <form action="/content/{{recipe.id}}/createReview" method='post'>
+                {% csrf_token %}
+                <input type="hidden" name="user_id" value="{{request.session.id}}">
+                <input type="hidden" name="recipe_id" value="{{recipe.id}}">
+                Review title: <input type='text' name='headline'>
+                <p></p>
+                <label for="exampleFormControlTextarea1">Review</label>
+                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name ='review' type = 'review'></textarea>
+                <p></p>            
+                <div class="dropdown" style="display:flex">
+                    <p style = "padding-right: 50px">Rating (5 being the best)</p>
+                    <select id="stars" name="stars">
+                        
+                        <option value=1>1</option>
+                        <option value=2>2</option>
+                        <option value=3>3</option>
+                        <option value=4>4</option>
+                        <option value=5>5</option>
+                        
+                    </select>
                 </div>
-                {% endfor %}
+                </div>
+                <div class="col"></div>
+                <p></p>
             </div>
-    </div>
-
-
-</body>
+            <a href="/content/home" class="btn btn-primary" style= "margin-top: 20px">Cancel</a>
+            <input type="submit" value = "Submit" class="btn btn-primary" style= "margin-top: 20px"> 
+        </form>
+            
+        
+    </body>
 </html>

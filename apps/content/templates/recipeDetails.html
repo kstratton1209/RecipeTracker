@@ -60,9 +60,10 @@
             <h5>Source: {{recipe.source}}</h5>
             <h5>{{recipe.date_added}}</h5>
             <h5>Added by: {{recipe.user.first_name}}</h5>
+            <h5>Notes by {{recipe.user.first_name}}: {{recipe.notes}} </h5>
             <h5>{{recipe.want_to_make.count}} users want to make this recipe.</h5>
             <h5>{{recipe.already_made.count}} users have made this recipe.</h5>
-            <img src="{{recipe.img}}" alt="" style="width:50%">
+            <img src="{{ MEDIA_URL }}{{ recipe.img }}" alt="img" style="width:50%">
 
             
             

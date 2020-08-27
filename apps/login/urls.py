@@ -8,4 +8,7 @@ urlpatterns = [
     path('success',views.success),
     path('logout',views.logout),
     path('registerVal',views.ajaxregister),
+    path('bio',views.bio),
+    path('addBio',views.addBio),
+
 ]

@@ -62,7 +62,7 @@
         <div class="row">
           <div class="col">
 
-            <h4>Hello {{request.session.first_name}}! Add a new recipe here:</h4>
+            <h4>Hello {{request.session.first_name}}! Let's edit this recipe:</h4>
 
 
             {% if messages %}
@@ -72,16 +72,16 @@
                     {% endfor %}
                 </ul>
             {% endif %} 
-            <form action="/content/createRecipe" method='post' enctype="multipart/form-data">
+            <form action="/content/{{request.session.id}}/{{recipe_details.id}}/update" method='post' enctype="multipart/form-data">
                 {% csrf_token %}
                 <input type="hidden" name="user_id" value="{{request.session.id}}">
-                Recipe title: <input type='text' name='recipe_title' value = '{{recipeName}}'>
+                Recipe title: <input type='text' name='recipe_title' value = '{{recipe_details.title}}'>
                 <p></p>
-                Source: <input type='text' name='source' value = '{{recipeSource}}'>
+                Source: <input type='text' name='source' value = '{{recipe_details.source}}'>
                 <p></p>            
                 <div class="dropdown" style="display:flex">
                     <p style = "padding-right: 50px">Category</p>
-                    <select id="Category" name="category">
+                    <select id="Category" name="category" value = {{recipe_details.category}}>
                         
                         <option value="Appetizer">Appetizer</option>
                         <option value="Side">Side</option>
@@ -91,10 +91,12 @@
                     </select>
                 </div>
                 <p></p>
-                URL: <input type='text' name='url'>
+                URL: <input type='text' name='url' value = {{recipe_details.url}}>
+                <p></p>
+                <img src="{{ MEDIA_URL }}{{ recipe_details.img }}" alt="img" style="width:50%">
                 <p></p>
                 <span>
-                  Image: <input type="file" name="img" onchange="previewFile()">
+                  Image: <input type="file" name="img" onchange="previewFile()" value = {{recipe_details.img}}>
                 </span><br>
                 <p></p>
                 <div class="dropdown" style="display:flex">
@@ -106,9 +108,9 @@
                 </div>
                 <p></p>
                 <p>Anything you want to note about this recipe? Change in cooking time, ingredients, etc? </p>
-                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="notes" value = '{{recipeNotes}}'></textarea>
+                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="notes" >{{recipe_details.notes}}</textarea>
                 <p></p>
-                <a href="/content/home" class="btn btn-primary" style= "margin-top: 20px">Cancel</a>
+                <a href="/content/{{request.session.id}/myRecipes" class="btn btn-primary" style= "margin-top: 20px">Cancel</a>
                 <input type="submit" value = "Submit" class="btn btn-primary" style= "margin-top: 20px"> 
             </form>
           </div>

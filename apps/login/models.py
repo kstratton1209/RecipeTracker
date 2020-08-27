@@ -46,8 +46,16 @@ class Registration(models.Model):
     last_name = models.CharField(max_length=255)
     email = models.CharField(max_length=255)
     password = models.CharField(max_length=255)
+    following = models.ManyToManyField('self', symmetrical=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     objects = RegistrationManager()
 
+class Profile(models.Model):
+    user = models.OneToOneField(Registration, on_delete = models.CASCADE)
+    bio = models.CharField(max_length=255)
+    city = models.CharField(max_length=255)
+    state = models.CharField(max_length=255)
+    age = models.IntegerField()
+    profpic = models.ImageField(upload_to="forums", default=None, blank=True, null=True)
 

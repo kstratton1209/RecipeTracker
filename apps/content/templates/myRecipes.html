@@ -59,7 +59,7 @@
 
       <div class="container-fluid">
 
-        <div class="granted">
+        <div class="myrecipes">
             <p>My recipes:</p>
     
     
@@ -71,13 +71,13 @@
                     <th scope="col">Source</th>
                     <th scope="col">Date added</th>
                     <th scope="col">Status</th>
+                    <th scope="col">Notes</th>
                     <th scope="col">View</th>
                   </tr>
                 </thead>
                 <tbody>
                 {% for recipes in logged_user_recipes %}
                     
-
                         <tr>
                             <td>{{recipes.title}}</td>
                             <td>{{recipes.category}}</td>
@@ -90,12 +90,14 @@
                               {% else %}
                               <td></td>
                               {% endif %}
-                            
-                                <td>
-                                      <a href="/content/recipe/{{recipes.id}}/details">View</a>
-                                </td>
-                   
-                        </tr>
+                              
+                            <td>{{recipes.notes}} </td>
+                            <td>
+                                  <a href="/content/recipe/{{recipes.id}}/details">View | </a>
+                                  <a href="/content/{{request.session.id}}/{{recipes.id}}/edit">Edit | </a>
+                                  <a href="/content/{{request.session.id}}/{{recipes.id}}/delete">Delete</a>
+                            </td>
+                          </tr>
                    
                 {% endfor %}
 
@@ -113,6 +115,7 @@
                         {% else %}
                         <td></td>
                         {% endif %}
+                        <td>{{recipes.notes}} </td>
                           <td>
                                 <a href="/content/recipe/{{recipes.id}}/details">View</a>
                           </td>
@@ -136,32 +139,58 @@
                         {% else %}
                         <td></td>
                         {% endif %}
-                          <td>
-                                <a href="/content/recipe/{{recipes.id}}/details">View</a>
-                          </td>
+                        <td>{{recipes.notes}} </td>
+                        <td>
+                              <a href="/content/recipe/{{recipes.id}}/details">View</a>
+                        </td>
                   </tr>
-                  {% endif %}
-                  {% endif %}
+                
+                {% endif %}
+                {% endif %}
                 {% endfor %}
                 
                     
                 </tbody>
               </table>
+<!-- Follower table  -->
+
+<p>People I follow:</p>
+    
+<div class="row">  
+  <div class="col">
+    <table class="table table-striped table-bordered table-sm">
+        <thead>
+          <tr>
+            <th scope="col">User</th>
+            <th scope="col">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+        {% for following in logged_user.following.all %}
+
+                <tr>
+                    <td>{{following.first_name}} {{following.last_name}}</td>
+                    <td>
+                        <a href="/content/{{request.session.id}}/{{following.id}}/unfollow">Unfollow</a>
+                    </td>
+                </tr>
+
+        {% endfor %}
+        </tbody>
+    </table>
+  </div>
+<div class="col"></div>  
+</div>
+
+
         </div>
 
       </div>
 
 
-      
-      <script src="{% static '//vendor/jquery/jquery.min.js' %}"></script>
 
 
-
-
-
-
-      
-
+  <script src="{% static '//vendor/jquery/jquery.min.js' %}"></script>
   <script src="{% static '//vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
 
   <!-- Menu Toggle Script -->

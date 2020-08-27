@@ -64,6 +64,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.media',
             ],
         },
     },
@@ -120,3 +121,21 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# Settings for file uploads
+
+TEMPLATES[0]["OPTIONS"]["context_processors"].append('django.template.context_processors.media')
+
+MEDIA_URL = '/media/'
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+
+# Specify the number of threads per page
+
+# File upload settings
+
+MAX_UPLOAD_SIZE = 5242880
+
+ALLOWED_EXTENSIONS = ("jpg", "jpeg", "gif", "png")
+

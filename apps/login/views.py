@@ -1,6 +1,6 @@
 # Create your views here.
 from django.shortcuts import render, HttpResponse, redirect
-from .models import Registration, RegistrationManager
+from .models import Registration, RegistrationManager, Profile
 from django.contrib import messages
 import bcrypt
 
@@ -32,7 +32,28 @@ def register(request):
             request.session['email']=logged_user.email
             request.session['id']=logged_user.id
 
-        return redirect('/success')
+        return redirect('/bio')
+
+def bio(request):
+    return render(request,"bio.html")
+
+def addBio(request):
+    city_from_form = request.POST['city']
+    state_from_form = request.POST['state']
+    bio_from_form = request.POST['bio']
+    age_from_form = int(request.POST['age'])
+    user_id = int(request.POST['user_id'])
+    profpic_from_form = request.FILES['profpic']
+
+    logged_user = Registration.objects.get(id = user_id)
+
+    Profile.objects.create(city = city_from_form, user = logged_user, state = state_from_form, age = age_from_form, profpic = profpic_from_form, bio = bio_from_form)
+
+
+    return redirect('/success')
+
+
+
 
 def login(request):
     
@@ -68,3 +89,4 @@ def success(request):
 def logout(request):
     request.session.clear()
     return redirect("/")
+
