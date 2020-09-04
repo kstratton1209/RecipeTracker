@@ -78,27 +78,25 @@
                 <tbody>
                 {% for recipes in logged_user_recipes %}
                     
-                        <tr>
-                            <td>{{recipes.title}}</td>
-                            <td>{{recipes.category}}</td>
-                            <td>{{recipes.source}}</td>
-                            <td>{{recipes.created_at}}</td>
-                            {% if logged_user in recipes.already_made.all %}
-                              <td>Made it!</td>
-                              {% elif logged_user in recipes.want_to_make.all %}
-                              <td>Want to make!</td>
-                              {% else %}
-                              <td></td>
-                              {% endif %}
-                              
-                            <td>{{recipes.notes}} </td>
-                            <td>
-                                  <a href="/content/recipe/{{recipes.id}}/details">View | </a>
-                                  <a href="/content/{{request.session.id}}/{{recipes.id}}/edit">Edit | </a>
-                                  <a href="/content/{{request.session.id}}/{{recipes.id}}/delete">Delete</a>
-                            </td>
-                          </tr>
-                   
+                  <tr>
+                    <td>{{recipes.title}}</td>
+                    <td>{{recipes.category}}</td>
+                    <td>{{recipes.source}}</td>
+                    <td>{{recipes.created_at}}</td>
+                    {% if logged_user in recipes.already_made.all %}
+                      <td>Made it!</td>
+                      {% elif logged_user in recipes.want_to_make.all %}
+                        <td>Want to make!</td>
+                      {% else %}
+                      <td></td>
+                    {% endif %}
+                    <td>{{recipes.notes}} </td>
+                    <td>
+                          <a href="/content/recipe/{{recipes.id}}/details">View | </a>
+                          <a href="/content/{{request.session.id}}/{{recipes.id}}/edit">Edit | </a>
+                          <a href="/content/{{request.session.id}}/{{recipes.id}}/delete">Delete</a>
+                    </td>
+                  </tr>
                 {% endfor %}
 
                 {% for recipes in recipes_made %}
@@ -107,18 +105,18 @@
                     <td>{{recipes.title}}</td>
                     <td>{{recipes.category}}</td>
                     <td>{{recipes.source}}</td>
-                      <td>{{recipes.created_at}}</td>
-                      {% if logged_user in recipes.already_made.all %}
-                        <td>Made it!</td>
-                        {% elif logged_user in recipes.want_to_make.all %}
+                    <td>{{recipes.created_at}}</td>
+                    {% if logged_user in recipes.already_made.all %}
+                      <td>Made it!</td>
+                      {% elif logged_user in recipes.want_to_make.all %}
                         <td>Want to make!</td>
-                        {% else %}
-                        <td></td>
-                        {% endif %}
-                        <td>{{recipes.notes}} </td>
-                          <td>
-                                <a href="/content/recipe/{{recipes.id}}/details">View</a>
-                          </td>
+                      {% else %}
+                      <td></td>
+                    {% endif %}
+                    <td>{{recipes.notes}} </td>
+                    <td>
+                      <a href="/content/recipe/{{recipes.id}}/details">View</a>
+                    </td>
                   </tr>
                   {% endif %}
                 {% endfor %}
@@ -167,14 +165,12 @@
         </thead>
         <tbody>
         {% for following in logged_user.following.all %}
-
-                <tr>
-                    <td>{{following.first_name}} {{following.last_name}}</td>
-                    <td>
-                        <a href="/content/{{request.session.id}}/{{following.id}}/unfollow">Unfollow</a>
-                    </td>
-                </tr>
-
+          <tr>
+            <td>{{following.first_name}} {{following.last_name}}</td>
+            <td>
+                <a href="/content/{{request.session.id}}/{{following.id}}/unfollow">Unfollow</a>
+            </td>
+          </tr>
         {% endfor %}
         </tbody>
     </table>
@@ -183,9 +179,9 @@
 </div>
 
 
-        </div>
+</div>
 
-      </div>
+</div>
 
 
 

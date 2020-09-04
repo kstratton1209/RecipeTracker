@@ -77,8 +77,8 @@
       <img src="https://shapeyourfutureok.com/wp-content/uploads/2018/10/25698-TSET-19-04-SYF-Website-Refresh_Header_5FoodGroups_F.jpg" alt="" style="width:90%; margin-left: 10px;">
 
       <div class="container">
-        <h1 class="mt-4">My recipe tracker</h1>
-        <p>Welome to My Recipe Tracker! An easy way to track and share recipes you've tried or want to make.</p>
+        <h1 class="mt-4">GoodEats</h1>
+        <p>Welome to GoodEats! An easy way to track and share recipes you've tried or want to make.</p>
         <p></p>
         <!-- Recipes by people logged user is not following -->
         <h2>Trending recipes...</h2>
@@ -97,7 +97,7 @@
                       <h5> "{{reviews.headline}}"- {{reviews.stars}} stars</h5>
                       <p style = "font-style: italic;">{{reviews.review}}  -{{reviews.user.first_name}}</p>
                       {% if logged_user == reviews.user %}
-                      <a href="/content/{{appetizers.id}}/{{reviews.id}}/deleteReview">Delete review</a>
+                        <a href="/content/{{appetizers.id}}/{{reviews.id}}/deleteReview">Delete review</a>
                       {% endif %}
                       <p></p>
                       <h5> </h5>
@@ -107,9 +107,8 @@
                       <a href="/content/{{recipes.id}}/review" class="btn btn-primary btn-sm active" role="button">Leave a review</a>
                     </div>
                   </div>
-                    
-                  
-              </div>
+               </div>
+              
               {% if logged_user != recipes.user and logged_user not in recipes.want_to_make.all and logged_user not in recipes.already_made.all %}
               <form action="/content/{{recipes.id}}/{{request.session.id}}/like" method='post'>
                 {% csrf_token %}
@@ -117,15 +116,14 @@
               <div class="dropdown" style="display:flex">
                 <p style = "padding-right: 20px">Have you made this recipe?</p>
                 <select id="status" name="status">
-                    <option name= "want_to_make">Made it!</option>
-                    <option name= "already_made">Want to try it!</option>
+                  <option name= "want_to_make">Made it!</option>
+                  <option name= "already_made">Want to try it!</option>
                 </select>
-                </div>
-                <input type="submit" value = "Submit" class="btn btn-primary btn-sm" style= "margin:5px 0px 0px 0px 20px; margin-left: 10px;">
-                </form>  
-          
+              </div>
+              <input type="submit" value = "Submit" class="btn btn-primary btn-sm" style= "margin:5px 0px 0px 0px 20px; margin-left: 10px;">
+              </form> 
               {% endif %}
-                <br>
+              <br>
             {% endif %}
             {% endfor %}
           
@@ -138,9 +136,9 @@
                     <h4><a href="/content/recipe/{{recipes.id}}/details">{{recipes.title}}</a></h4>
                     <h6>Added by {{recipes.user.first_name}} 
                       
-                      {% if logged_user != recipes.user and recipes.user not in logged_user.following.all %}
+                    {% if logged_user != recipes.user and recipes.user not in logged_user.following.all %}
                       <a href="/content/{{request.session.id}}/{{recipes.user.id}}/follow"> - follow {{recipes.user.first_name}}</a>
-                      {% endif %}
+                    {% endif %}
                     <!-- <img src="{{recipes.img}}" alt="" style="width:75%"> -->
                     <p></p>
                     <img src="{{ MEDIA_URL }}{{ recipes.img }}" alt="img" style="width:50%">
@@ -151,7 +149,7 @@
                       <h5> "{{reviews.headline}}"- {{reviews.stars}} stars</h5>
                       <p style = "font-style: italic;">{{reviews.review}}  -{{reviews.user.first_name}}</p>
                       {% if logged_user == reviews.user %}
-                      <a href="/content/{{appetizers.id}}/{{reviews.id}}/deleteReview">Delete review</a>
+                        <a href="/content/{{appetizers.id}}/{{reviews.id}}/deleteReview">Delete review</a>
                       {% endif %}
                       <p></p>
                       <h5> </h5>
@@ -161,9 +159,9 @@
                       <a href="/content/{{recipes.id}}/review" class="btn btn-primary btn-sm active" role="button">Leave a review</a>
                     </div>
                   </div>
-                    
-                  
               </div>
+
+
               {% if logged_user != recipes.user and logged_user not in recipes.want_to_make.all and logged_user not in recipes.already_made.all %}
               <form action="/content/{{recipes.id}}/{{request.session.id}}/like" method='post'>
                 {% csrf_token %}
@@ -171,12 +169,12 @@
               <div class="dropdown" style="display:flex">
                 <p style = "padding-right: 20px">Have you made this recipe?</p>
                 <select id="status" name="status">
-                    <option name= "want_to_make">Made it!</option>
-                    <option name= "already_made">Want to try it!</option>
+                  <option name= "want_to_make">Made it!</option>
+                  <option name= "already_made">Want to try it!</option>
                 </select>
-                </div>
-                <input type="submit" value = "Submit" class="btn btn-primary btn-sm" style= "margin:5px 0px 0px 0px 20px; margin-left: 10px;">
-                </form>  
+              </div>
+              <input type="submit" value = "Submit" class="btn btn-primary btn-sm" style= "margin:5px 0px 0px 0px 20px; margin-left: 10px;">
+              </form>  
           
               {% endif %}
                 <br>
@@ -184,11 +182,8 @@
             {% endfor %}
           
           
-          
+      <!-- /#page-container -->
           </div>
-
-        
-        
       <!-- /#page-content-wrapper -->
         </div>
       </div>
@@ -199,19 +194,15 @@
  
 
 
-  <script src="{% static '//vendor/jquery/jquery.min.js' %}"></script>
-  <script src="{% static '//vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
-  <!-- Menu Toggle Script -->
-  <script>
-    $("#menu-toggle").click(function(e) {
-      e.preventDefault();
-      $("#wrapper").toggleClass("toggled");
-    });
-    
-  </script>
-
-
+<script src="{% static '//vendor/jquery/jquery.min.js' %}"></script>
+<script src="{% static '//vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+<!-- Menu Toggle Script -->
+<script>
+$("#menu-toggle").click(function(e) {
+  e.preventDefault();
+  $("#wrapper").toggleClass("toggled");
+});
+</script>
 
 </body>
-
 </html>
